@@ -10,9 +10,9 @@
 		<table class='table table-hover table-responsive table-bordered'>
 
 			<tr>
-				<td><b>Name</b></td>
-				<td><input type='text' name='name' class='form-control'
-					value="${user.name}" /></td>
+				<td><b>telefono</b></td>
+				<td><input type='text' name='telefono' class='form-control'
+					value="${user.telefono}" /></td>
 			</tr>
 
 			<tr>
