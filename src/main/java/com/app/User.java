@@ -27,6 +27,9 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	private String adress;
 	@NotNull
 	private String telefono;
+	private Integer userId;
+	private String title;
+	private String body;
 
 	public String getTelefono() {
 		return telefono;
@@ -78,6 +81,30 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 		this.name = name;
 		this.surname = surname;
 		this.adress = adress;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getBody() {
+		return body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 }

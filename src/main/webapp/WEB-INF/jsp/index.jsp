@@ -23,6 +23,11 @@
             <td><input type='text' name='adress' class='form-control' size="20" required/></td>
             
         </tr>
+        <tr>
+            <td><b>Celular</b></td>
+            <td><input type='text' name='telefono' class='form-control' size="20" required/></td>
+            
+        </tr>
  
  
         <tr>

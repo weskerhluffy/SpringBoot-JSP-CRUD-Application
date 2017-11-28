@@ -5,9 +5,14 @@ package com.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.net.URI;
+import java.util.LinkedHashMap;
+import java.util.List;
+import org.springframework.web.client.RestTemplate;
 
 @Service
 public class UserServiceImpl implements IUserService {
+	public static final String REST_SERVICE_URI = "https://jsonplaceholder.typicode.com";
 
 	private IUser userRepo;
 
@@ -40,8 +45,10 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	public Boolean enviarCodigo(User user) {
-
-		// TODO: Enviar codigo
+// XXX: http://websystique.com/spring-boot/spring-boot-rest-api-example/
+		RestTemplate restTemplate = new RestTemplate();
+		User user1 = restTemplate.getForObject(REST_SERVICE_URI + "/posts/"+user.getTelefono(), User.class);
+		System.out.println("caca " + user1.getBody());
 		return true;
 	}
 
