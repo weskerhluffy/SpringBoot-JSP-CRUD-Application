@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * @author Fatih Totrakanlı
@@ -30,6 +31,7 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	private Integer userId;
 	private String title;
 	private String body;
+	private Boolean authenticated;
 
 	public String getTelefono() {
 		return telefono;
@@ -105,6 +107,18 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public Boolean getAuthenticated() {
+		return authenticated;
+	}
+
+	public void setAuthenticated(Boolean authenticated) {
+		this.authenticated = authenticated;
+	}
+
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 }

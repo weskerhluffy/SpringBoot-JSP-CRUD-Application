@@ -10,9 +10,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+
 @Service
 public class UserServiceImpl implements IUserService {
-	public static final String REST_SERVICE_URI = "https://jsonplaceholder.typicode.com";
+	public static final String REST_SERVICE_URI = "https://postman-echo.com/basic-auth";
 
 	private IUser userRepo;
 
@@ -45,10 +50,13 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	public Boolean enviarCodigo(User user) {
-// XXX: http://websystique.com/spring-boot/spring-boot-rest-api-example/
+		// XXX: http://websystique.com/spring-boot/spring-boot-rest-api-example/
 		RestTemplate restTemplate = new RestTemplate();
-		User user1 = restTemplate.getForObject(REST_SERVICE_URI + "/posts/"+user.getTelefono(), User.class);
-		System.out.println("caca " + user1.getBody());
+		restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("postman", "password"));
+		ResponseEntity<User> ruser = restTemplate.exchange(REST_SERVICE_URI, HttpMethod.GET, null, User.class);
+		HttpStatus statusCode = ruser.getStatusCode();
+		User user1 = ruser.getBody();
+		System.out.println("caca " + user1 + " estatus " + statusCode);
 		return true;
 	}
 

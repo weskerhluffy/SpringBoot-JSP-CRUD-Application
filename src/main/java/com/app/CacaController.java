@@ -17,8 +17,8 @@ import org.springframework.context.annotation.Scope;
 
 @Controller
 @Scope("session")
-@RequestMapping("/index")
-public class IndexController {
+@RequestMapping("/caca")
+public class CacaController {
 
 	private IUserService userService;
 	private User usuarioTmp;
@@ -29,21 +29,22 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public ModelAndView index() {
-		ModelAndView model = new ModelAndView("index");
+	public ModelAndView caca() {
+		ModelAndView model = new ModelAndView("caca");
 		model.addObject("list", userService.listAllUsers());
+		System.out.println("me lleva la mierda");
 		return model;
 	}
 
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
 	public ModelAndView deleteUsers(@PathVariable long id) {
 		userService.deleteUser(id);
-		return new ModelAndView("redirect:/index");
+		return new ModelAndView("redirect:/caca");
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView userRegister(@ModelAttribute("user") User user) {
-		ModelAndView model = new ModelAndView("index");
+		ModelAndView model = new ModelAndView("caca");
 		if (user != null) {
 			// TODO: Validar diccionario de datos
 			// userService.saveUser(user);
@@ -59,7 +60,7 @@ public class IndexController {
 		} else {
 			model.addObject("danger", "Telefono incorrecto");
 		}
-		return new ModelAndView("redirect:/index/ingresaCodigo");
+		return new ModelAndView("redirect:/caca/ingresaCodigo");
 	}
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
@@ -86,7 +87,7 @@ public class IndexController {
 		user.setSurname(surname);
 		user.setAdress(adress);
 		userService.saveUser(user);
-		return new ModelAndView("redirect:/index");
+		return new ModelAndView("redirect:/caca");
 	}
 
 }
