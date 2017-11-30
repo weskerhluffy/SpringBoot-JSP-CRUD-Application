@@ -5,6 +5,8 @@ package com.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.ParameterizedType;
 import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,6 +16,7 @@ import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.core.ParameterizedTypeReference;
 
 @Service
 public class UserServiceImpl implements IUserService {
