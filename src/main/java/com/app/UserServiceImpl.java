@@ -53,6 +53,10 @@ public class UserServiceImpl implements IUserService {
 		// XXX: http://websystique.com/spring-boot/spring-boot-rest-api-example/
 		RestTemplate restTemplate = new RestTemplate();
 		restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("postman", "password"));
+		/*
+		 * User user1 = restTemplate.getForObject(REST_SERVICE_URI, User.class);
+		 * System.out.println("caca " + user1);
+		 */
 		ResponseEntity<User> ruser = restTemplate.exchange(REST_SERVICE_URI, HttpMethod.GET, null, User.class);
 		HttpStatus statusCode = ruser.getStatusCode();
 		User user1 = ruser.getBody();
