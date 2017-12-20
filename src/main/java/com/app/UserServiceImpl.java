@@ -55,6 +55,7 @@ public class UserServiceImpl implements IUserService {
 	public Boolean enviarCodigo(User user) {
 		// XXX: http://websystique.com/spring-boot/spring-boot-rest-api-example/
 		RestTemplate restTemplate = new RestTemplate();
+		// XXX: http://www.baeldung.com/how-to-use-resttemplate-with-basic-authentication-in-spring
 		restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("postman", "password"));
 		/*
 		 * User user1 = restTemplate.getForObject(REST_SERVICE_URI, User.class);
