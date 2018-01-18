@@ -75,6 +75,7 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 
 	public User() {
 		super();
+		this.authenticated = false;
 	}
 
 	public User(String name, String surname, String adress) {

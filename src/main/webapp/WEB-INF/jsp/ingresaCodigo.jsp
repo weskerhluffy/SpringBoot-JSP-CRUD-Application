@@ -4,36 +4,36 @@
 
 <div class="container">
 
-	<h3>User Registration</h3>
-	<form action='/index/update' method='post'>
+	<h3>usuario Registration</h3>
+	<form action='/caca/ingresaCodigoo' method='post'>
 
 		<table class='table table-hover table-responsive table-bordered'>
 
 			<tr>
 				<td><b>telefono</b></td>
 				<td><input type='text' name='telefono' class='form-control'
-					value="${user.telefono}" /></td>
+					value="${usuario.telefono}" /></td>
 			</tr>
 
 			<tr>
 				<td><b>Surname</b></td>
 				<td><input type='text' name='surname' class='form-control'
-					value="${user.surname}" /></td>
+					value="${usuario.surname}" /></td>
 			</tr>
 
 			<tr>
 				<td><b>Adress</b></td>
 				<td><input type='text' name='adress' class='form-control'
-					size="20" value="${user.adress}" /></td>
+					size="20" value="${usuario.adress}" /></td>
 
 			</tr>
 
 			<input type='hidden' id='id' rows='5' class='form-control' name='id'
-				value="${user.id}" />
+				value="${usuario.id}" />
 			<tr>
 				<td></td>
 				<td>
-					<button type="submit" class="btn btn-primary">Update User
+					<button type="submit" class="btn btn-primary">Update usuario
 						Information</button>
 				</td>
 			</tr>

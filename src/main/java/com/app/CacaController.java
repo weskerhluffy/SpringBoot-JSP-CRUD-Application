@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.context.annotation.Scope;
 
@@ -15,19 +16,26 @@ import org.springframework.context.annotation.Scope;
  *
  */
 
+// XXX: https://dzone.com/articles/using-http-session-spring
+// XXX: https://stackoverflow.com/questions/18791645/how-to-use-session-attributes-in-spring-mvc
+// XXX: https://www.intertech.com/Blog/understanding-spring-mvc-model-and-session-attributes/
+// XXX: http://www.baeldung.com/spring-mvc-and-the-modelattribute-annotation
 @Controller
-@Scope("session")
+@SessionAttributes("usuario")
 @RequestMapping("/caca")
 public class CacaController {
 
 	private IUserService userService;
-	private User usuarioTmp;
 
 	@Autowired
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
 
+	@ModelAttribute("usuario")
+	public User generaMierda() {
+		return new User();
+	}
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView caca() {
 		ModelAndView model = new ModelAndView("caca");
@@ -43,15 +51,16 @@ public class CacaController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ModelAndView userRegister(@ModelAttribute("user") User user) {
-		ModelAndView model = new ModelAndView("caca");
+	public ModelAndView userRegister(@ModelAttribute("usuario") User user) {
+		ModelAndView model = new ModelAndView("/ingresaCodigo");
+		System.out.println("en usereg");
 		if (user != null) {
 			// TODO: Validar diccionario de datos
 			// userService.saveUser(user);
 			if (userService.enviarCodigo(user)) {
 				model.addObject("warning", "Codigo enviado correctamente");
-				usuarioTmp = user;
-				System.out.println("generado tel " + usuarioTmp.getTelefono());
+				assert user.getAuthenticated();
+				System.out.println("usuario maldito " + user);
 
 			} else {
 				model.addObject("danger", "Telefono incorrecto");
@@ -60,7 +69,7 @@ public class CacaController {
 		} else {
 			model.addObject("danger", "Telefono incorrecto");
 		}
-		return new ModelAndView("redirect:/caca/ingresaCodigo");
+		return model;
 	}
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
@@ -71,11 +80,11 @@ public class CacaController {
 		return model;
 	}
 
-	@RequestMapping(value = "/ingresaCodigo", method = RequestMethod.GET)
-	public ModelAndView ingresaCodigo() {
-		System.out.println("q onda " + usuarioTmp);
-		ModelAndView model = new ModelAndView("ingresaCodigo");
-		model.addObject("user", usuarioTmp);
+	@RequestMapping(value = "/ingresaCodigoo", method = RequestMethod.POST)
+	public ModelAndView ingresaCodigoo(@ModelAttribute("usuario") User usuario) {
+		System.out.println("q ondaaaa " + usuario);
+		ModelAndView model = new ModelAndView("edit");
+		// model.addObject("user", usuario);
 		return model;
 	}
 

@@ -47,7 +47,6 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void deleteUser(long id) {
-
 		userRepo.delete(id);
 
 	}
@@ -55,7 +54,8 @@ public class UserServiceImpl implements IUserService {
 	public Boolean enviarCodigo(User user) {
 		// XXX: http://websystique.com/spring-boot/spring-boot-rest-api-example/
 		RestTemplate restTemplate = new RestTemplate();
-		// XXX: http://www.baeldung.com/how-to-use-resttemplate-with-basic-authentication-in-spring
+		// XXX:
+		// http://www.baeldung.com/how-to-use-resttemplate-with-basic-authentication-in-spring
 		restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("postman", "password"));
 		/*
 		 * User user1 = restTemplate.getForObject(REST_SERVICE_URI, User.class);
@@ -65,7 +65,8 @@ public class UserServiceImpl implements IUserService {
 		HttpStatus statusCode = ruser.getStatusCode();
 		User user1 = ruser.getBody();
 		System.out.println("caca " + user1 + " estatus " + statusCode);
-		return true;
+		user.setAuthenticated(user1.getAuthenticated());
+		return user1.getAuthenticated();
 	}
 
 }
