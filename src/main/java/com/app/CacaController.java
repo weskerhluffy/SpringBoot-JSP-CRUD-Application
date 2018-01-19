@@ -17,8 +17,10 @@ import org.springframework.context.annotation.Scope;
  */
 
 // XXX: https://dzone.com/articles/using-http-session-spring
-// XXX: https://stackoverflow.com/questions/18791645/how-to-use-session-attributes-in-spring-mvc
-// XXX: https://www.intertech.com/Blog/understanding-spring-mvc-model-and-session-attributes/
+// XXX:
+// https://stackoverflow.com/questions/18791645/how-to-use-session-attributes-in-spring-mvc
+// XXX:
+// https://www.intertech.com/Blog/understanding-spring-mvc-model-and-session-attributes/
 // XXX: http://www.baeldung.com/spring-mvc-and-the-modelattribute-annotation
 @Controller
 @SessionAttributes("usuario")
@@ -36,6 +38,7 @@ public class CacaController {
 	public User generaMierda() {
 		return new User();
 	}
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public ModelAndView caca() {
 		ModelAndView model = new ModelAndView("caca");
@@ -81,9 +84,17 @@ public class CacaController {
 	}
 
 	@RequestMapping(value = "/ingresaCodigoo", method = RequestMethod.POST)
-	public ModelAndView ingresaCodigoo(@ModelAttribute("usuario") User usuario) {
-		System.out.println("q ondaaaa " + usuario);
-		ModelAndView model = new ModelAndView("edit");
+	public ModelAndView ingresaCodigoo(@ModelAttribute("usuario") User usuario, @RequestParam("shit") Integer caca) {
+		System.out.println("q ondaaaa " + usuario + " la cagada es " + caca);
+		ModelAndView model = null;
+		if (caca.equals(usuario.getUserId())) {
+			System.out.println("los nums coinciden");
+			model = new ModelAndView("edit");
+		} else {
+			System.out.println("los nums NO coinciden");
+			model = new ModelAndView("ingresaCodigo");
+			model.addObject("danger", "dr zaias");
+		}
 		// model.addObject("user", usuario);
 		return model;
 	}

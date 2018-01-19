@@ -4,6 +4,7 @@
 
 <div class="container">
 
+	<h1>${danger}</h1>
 	<h3>usuario Registration</h3>
 	<form action='/caca/ingresaCodigoo' method='post'>
 
@@ -28,13 +29,19 @@
 
 			</tr>
 
+			<tr>
+				<td><b>biatch</b></td>
+				<td><input type='text' name='shit' class='form-control'
+					value="${usuario.userId}" /></td>
+			</tr>
+
 			<input type='hidden' id='id' rows='5' class='form-control' name='id'
 				value="${usuario.id}" />
 			<tr>
 				<td></td>
 				<td>
-					<button type="submit" class="btn btn-primary">Update usuario
-						Information</button>
+					<button type="submit" class="btn btn-primary">Update
+						usuario Information</button>
 				</td>
 			</tr>
 
