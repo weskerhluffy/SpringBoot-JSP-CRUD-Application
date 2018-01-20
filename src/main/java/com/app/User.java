@@ -3,12 +3,15 @@
  */
 package com.app;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author Fatih Totrakanlı
@@ -32,6 +35,14 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	private String title;
 	private String body;
 	private Boolean authenticated;
+	private String correo;
+	// XXX:
+	// http://www.logicbig.com/how-to/code-snippets/jcode-spring-framework-datetimeformat/
+	// XXX:
+	// https://stackoverflow.com/questions/33595651/spring-mvc-different-customdateeditor-binders-for-various-fields
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date fecha;
+	private Date fecha1;
 
 	public String getTelefono() {
 		return telefono;
@@ -120,6 +131,31 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Date getFecha1() {
+		return fecha1;
+	}
+
+	public void setFecha1(Date fecha1) {
+		this.fecha1 = fecha1;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
 	}
 
 }

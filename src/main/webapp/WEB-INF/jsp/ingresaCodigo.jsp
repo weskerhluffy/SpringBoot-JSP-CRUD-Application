@@ -34,6 +34,12 @@
 				<td><input type='text' name='shit' class='form-control'
 					value="${usuario.userId}" /></td>
 			</tr>
+			
+			<tr>
+				<td><b>sea of dreams</b></td>
+				<td><input type='text' name='shit' class='form-control'
+					value="${usuario.fecha}" /></td>
+			</tr>
 
 			<input type='hidden' id='id' rows='5' class='form-control' name='id'
 				value="${usuario.id}" />

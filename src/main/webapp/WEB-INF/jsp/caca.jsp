@@ -1,44 +1,74 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="header.jsp"></jsp:include>
 
 <h3>User Registration</h3>
 <br>
 <form action='/caca/add' method='post'>
- 
-    <table class='table table-hover table-responsive table-bordered'>
- 
-        <tr>
-            <td><b>Name</b></td> 
-            <td><input type='text' name='name' class='form-control'  required/></td>
-        </tr>
- 
-        <tr>
-            <td><b>Surname</b></td>
-            <td><input type='text' name='surname' class='form-control' required /></td>
-        </tr>
- 
-        <tr>
-            <td><b>Adress</b></td>
-            <td><input type='text' name='adress' class='form-control' size="20" required/></td>
-            
-        </tr>
-        <tr>
-            <td><b>Celular</b></td>
-            <td><input type='text' name='telefono' class='form-control' size="20" required/></td>
-            
-        </tr>
- 
- 
-        <tr>
-            <td></td>
-            <td>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </td>
-        </tr>
- 
-    </table>
-    <b><c:out value="${danger}"></c:out></b>
+
+	<table class='table table-hover table-responsive table-bordered'>
+
+		<tr>
+			<td><b>Name</b></td>
+			<td><input type='text' name='name' class='form-control' required /></td>
+		</tr>
+
+		<tr>
+			<td><b>Surname</b></td>
+			<td><input type='text' name='surname' class='form-control'
+				required /></td>
+		</tr>
+
+		<tr>
+			<td><b>Adress</b></td>
+			<td><input type='text' name='adress' class='form-control'
+				size="20" required /></td>
+
+		</tr>
+		<tr>
+			<td><b>Celular</b></td>
+			<td><input type='text' name='telefono' class='form-control'
+				size="20" required /></td>
+		</tr>
+		<tr>
+			<td><b>Fecha</b></td>
+			<td><input type='text' name='fecha' class='form-control'
+				size="20" required /></td>
+		</tr>
+
+		<tr>
+			<td><b>Fecha 1</b></td>
+			<td><input type='text' name='fecha1' class='form-control'
+				size="20" required /></td>
+		</tr>
+
+		<tr>
+			<td><b>Fecha 2</b></td>
+			<td><input type='text' name='fecha2' class='form-control'
+				size="20" required /></td>
+		</tr>
+
+		<tr>
+			<td><b>Fecha 3</b></td>
+			<td><input type='text' name='fecha3' class='form-control'
+				size="20" required /></td>
+		</tr>
+
+		<tr>
+			<td><b>correin </b></td>
+			<td><input type='text' name='correo' class='form-control'
+				size="20" required /></td>
+		</tr>
+
+		<tr>
+			<td></td>
+			<td>
+				<button type="submit" class="btn btn-primary">Register</button>
+			</td>
+		</tr>
+
+	</table>
+	<b><c:out value="${danger}"></c:out></b>
 </form>
 
 
@@ -47,36 +77,32 @@
 <br>
 <table class="table table-hover">
 
-    <thead>
-      <tr>
-        <th><b>User Name</b></th>
-        <th><b>User Surname</b></th>
-        <th><b>User Adress</b></th>
-        <th><b>Transactions</b></th>
-      </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${list}" var="lou">
-      <tr>
-        <td><c:out value="${lou.name}"></c:out></td>
-        <td><c:out value="${lou.surname}"></c:out></td>
-        <td><c:out value="${lou.adress}"></c:out></td>
+	<thead>
+		<tr>
+			<th><b>User Name</b></th>
+			<th><b>User Surname</b></th>
+			<th><b>User Adress</b></th>
+			<th><b>Transactions</b></th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${list}" var="lou">
+			<tr>
+				<td><c:out value="${lou.name}"></c:out></td>
+				<td><c:out value="${lou.surname}"></c:out></td>
+				<td><c:out value="${lou.adress}"></c:out></td>
 
-			 <td>
-             <a href="/caca/${lou.id}/edit">
-                <button type="submit" class="btn btn-primary">Edit User</button>
-                </a>
-            </td>
-            <td>
-             <a href="/caca/${lou.id}/delete">
-                <button type="submit" class="btn btn-primary">Delete User</button>
-                </a>
-            </td>
-      </tr>
+				<td><a href="/caca/${lou.id}/edit">
+						<button type="submit" class="btn btn-primary">Edit User</button>
+				</a></td>
+				<td><a href="/caca/${lou.id}/delete">
+						<button type="submit" class="btn btn-primary">Delete User</button>
+				</a></td>
+			</tr>
 
-          </c:forEach>
-    </tbody>
-  </table>
+		</c:forEach>
+	</tbody>
+</table>
 </div>
 
 <jsp:include page="footer.jsp"></jsp:include>

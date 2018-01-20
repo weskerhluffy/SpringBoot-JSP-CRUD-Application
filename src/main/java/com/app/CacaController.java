@@ -1,7 +1,15 @@
 package com.app;
 
+import java.util.Date;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.context.annotation.Scope;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author Fatih Totrakanlı
@@ -28,6 +37,8 @@ import org.springframework.context.annotation.Scope;
 public class CacaController {
 
 	private IUserService userService;
+	@Autowired
+	private CorreoValidador emailValidator;
 
 	@Autowired
 	public void setUserService(IUserService userService) {
@@ -53,10 +64,26 @@ public class CacaController {
 		return new ModelAndView("redirect:/caca");
 	}
 
+	// XXX:
+	// https://www.petrikainulainen.net/programming/spring-framework/spring-from-the-trenches-parsing-date-and-time-information-from-a-request-parameter/
+	// XXX:
+	// https://www.javacodegeeks.com/2013/06/spring-mvc-validator-and-initbinder.html
+	// XXX:
+	// https://www.concretepage.com/spring/spring-mvc/spring-mvc-controlleradvice-annotation-example
+	// XXX:
+	// https://www.concretepage.com/spring/spring-mvc/spring-mvc-validator-with-initbinder-webdatabinder-registercustomeditor-example
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ModelAndView userRegister(@ModelAttribute("usuario") User user) {
+	public ModelAndView userRegister(@ModelAttribute("usuario") @Valid User user, BindingResult result,
+			@DateTimeFormat(pattern = "yyyy") Date fecha2, @DateTimeFormat(pattern = "yyyy-MM") Date fecha3) {
+		if (result.hasErrors()) {
+			for (ObjectError erro : result.getAllErrors()) {
+				System.out.println("error " + erro);
+			}
+			return new ModelAndView("redirect:/caca");
+		}
 		ModelAndView model = new ModelAndView("/ingresaCodigo");
-		System.out.println("en usereg");
+		System.out.println("en usereg fecha " + fecha2);
+		System.out.println("en usereg fecha 3 " + fecha3);
 		if (user != null) {
 			// TODO: Validar diccionario de datos
 			// userService.saveUser(user);
@@ -108,6 +135,12 @@ public class CacaController {
 		user.setAdress(adress);
 		userService.saveUser(user);
 		return new ModelAndView("redirect:/caca");
+	}
+
+	@InitBinder
+	public void dataCaca(WebDataBinder binder) {
+		System.out.println("bindeando mail val");
+		binder.addValidators(emailValidator);
 	}
 
 }
