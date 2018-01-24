@@ -9,19 +9,23 @@
 
 	<http use-expressions="true">
 		<intercept-url pattern="/login*" access="isAnonymous()" />
-		<intercept-url pattern="/rerere*" access="isAuthenticated()" />
+		<intercept-url pattern="/*" access="isAuthenticated()" />
 
-		<form-login login-page='/login.jsp' default-target-url="/caca"
-			authentication-failure-url="/login.html?error=true" />
+		<form-login login-page='/login' default-target-url="/caca"
+			authentication-failure-url="/login?error=true" />
 
-		<logout logout-success-url="/login.html" />
+		<logout logout-success-url="/login" />
+		<csrf disabled="true" />
 
 	</http>
+
 	<authentication-manager>
 		<authentication-provider>
-			<user-service>
-				<user name="user1" password="user1Pass" authorities="ROLE_USER" />
-			</user-service>
+		<!-- XXX: http://consistentcoder.com/spring-security-4-xml-config-jdbc-authentication-annotation-security-method -->
+			<jdbc-user-service id="jdbcUserService" 
+			data-source-ref="dataSource"
+			users-by-username-query=" select nombre as username, contra as password, activo as enabled from usuario where nombre=?"
+			authorities-by-username-query=" select u.nombre as username, r.nombre from usuario u, rol r, usuario_rol ur where u.id=ur.usuario_id and r.id=ur.rol_id and u.nombre=?" />
 		</authentication-provider>
 	</authentication-manager>
 </beans:beans>

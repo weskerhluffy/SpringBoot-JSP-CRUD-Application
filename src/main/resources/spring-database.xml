@@ -1,0 +1,31 @@
+<!-- <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd        
+                http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="org.h2.Driver" />
+		<!-- XXX: https://stackoverflow.com/questions/5763747/h2-in-memory-database-table-not-found -->
+		<!-- XXX: https://stackoverflow.com/questions/37788029/spring-boot-populate-h2-database-with-schema-sql-and-data-sql -->
+		<property name="url" value="jdbc:h2:mem:caca;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+	<!-- XXX: https://stackoverflow.com/questions/17107310/spring-config-xml-file-with-context-jdbc-tx-schemalocation -->
+	<!-- XXX: https://docs.spring.io/spring/docs/3.0.0.RC3/reference/html/ch12s09.html -->
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:dbscripts/createDB.sql" />
+		<jdbc:script location="classpath:dbscripts/caca.sql" />
+	</jdbc:initialize-database>
+	<!-- XXX: https://www.mkyong.com/spring/spring-embedded-database-examples/ -->
+</beans>
