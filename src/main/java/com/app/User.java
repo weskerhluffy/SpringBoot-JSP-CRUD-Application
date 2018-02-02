@@ -4,13 +4,22 @@
 package com.app;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -18,7 +27,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  */
 
-@Entity // Proje oluşturulurken Üyeler için JPA ile standart entity modeli
+@Entity(name="usuario") // Proje oluşturulurken Üyeler için JPA ile standart entity modeli
 		// oluşturulmuştur.
 public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db olduğu için sunucu
 					// durdurulduğunda veriler gidecektir.
@@ -26,23 +35,40 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@Column(name="nombre")
 	private String name;
+	@Transient
 	private String surname;
+	@Transient
 	private String adress;
-	@NotNull
+	@Transient
 	private String telefono;
+	@Transient
 	private Integer userId;
+	@Transient
 	private String title;
+	@Transient
 	private String body;
+	@Column(name="activo")
 	private Boolean authenticated;
+	@Transient
 	private String correo;
 	// XXX:
 	// http://www.logicbig.com/how-to/code-snippets/jcode-spring-framework-datetimeformat/
 	// XXX:
 	// https://stackoverflow.com/questions/33595651/spring-mvc-different-customdateeditor-binders-for-various-fields
+	@Transient
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fecha;
+	@Transient
 	private Date fecha1;
+	@NotEmpty
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "usuario_rol", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "rol_id") })
+	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
+	
+	private String contra;
 
 	public String getTelefono() {
 		return telefono;
@@ -133,7 +159,6 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-
 	public Date getFecha() {
 		return fecha;
 	}
@@ -156,6 +181,30 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+
+	public Set<UserProfile> getUserProfiles() {
+		return userProfiles;
+	}
+
+	public void setUserProfiles(Set<UserProfile> userProfiles) {
+		this.userProfiles = userProfiles;
+	}
+
+	public String getContra() {
+		return contra;
+	}
+
+	public void setContra(String contra) {
+		this.contra = contra;
+	}
+	
+	public String getNombre() {
+		return name;
+	}
+
+	public void setNombre(String name) {
+		this.name = name;
 	}
 
 }

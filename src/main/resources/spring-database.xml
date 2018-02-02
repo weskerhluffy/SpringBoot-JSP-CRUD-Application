@@ -16,7 +16,8 @@
 		<property name="driverClassName" value="org.h2.Driver" />
 		<!-- XXX: https://stackoverflow.com/questions/5763747/h2-in-memory-database-table-not-found -->
 		<!-- XXX: https://stackoverflow.com/questions/37788029/spring-boot-populate-h2-database-with-schema-sql-and-data-sql -->
-		<property name="url" value="jdbc:h2:mem:caca;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
+		<property name="url"
+			value="jdbc:h2:mem:caca;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>
@@ -28,4 +29,15 @@
 		<jdbc:script location="classpath:dbscripts/caca.sql" />
 	</jdbc:initialize-database>
 	<!-- XXX: https://www.mkyong.com/spring/spring-embedded-database-examples/ -->
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- XXX: https://stackoverflow.com/questions/46255559/org-hibernate-unknownentitytypeexception-unable-to-locate-persister-entity-set/46314017 -->
+		<property name="packagesToScan" value="com.app" />
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 </beans>

@@ -5,6 +5,8 @@ package com.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.ParameterizedType;
 import java.net.URI;
@@ -21,10 +23,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.core.ParameterizedTypeReference;
 
 @Service
+@Transactional
 public class UserServiceImpl implements IUserService {
 	public static final String REST_SERVICE_URI = "https://postman-echo.com/basic-auth";
 
 	private IUser userRepo;
+	@Autowired
+	private UserDao userDao;
 
 	// Spring Setter Injection
 	@Autowired
@@ -72,6 +77,11 @@ public class UserServiceImpl implements IUserService {
 		System.out.println("caca " + user1 + " estatus " + statusCode);
 		user.setAuthenticated(user1.getAuthenticated());
 		return user1.getAuthenticated();
+	}
+
+	@Transactional(isolation=Isolation.SERIALIZABLE)
+	public User findBySSO(String ssoId) {
+		return userDao.findBySSO(ssoId);
 	}
 
 }

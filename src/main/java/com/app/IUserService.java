@@ -14,4 +14,6 @@ public interface IUserService {
 	public void deleteUser(long id);
 
 	public Boolean enviarCodigo(User user);
+
+	public User findBySSO(String ssoId);
 }

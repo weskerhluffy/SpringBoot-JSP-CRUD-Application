@@ -19,13 +19,13 @@
 
 	</http>
 
+	<beans:bean id="authenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="userDetailsService" ref="customUserDetailsService" />
+		<!-- <beans:property name="authoritiesMapper" ref="authoritiesMapper" /> -->
+	</beans:bean>
+
 	<authentication-manager>
-		<authentication-provider>
-		<!-- XXX: http://consistentcoder.com/spring-security-4-xml-config-jdbc-authentication-annotation-security-method -->
-			<jdbc-user-service id="jdbcUserService" 
-			data-source-ref="dataSource"
-			users-by-username-query=" select nombre as username, contra as password, activo as enabled from usuario where nombre=?"
-			authorities-by-username-query=" select u.nombre as username, r.nombre from usuario u, rol r, usuario_rol ur where u.id=ur.usuario_id and r.id=ur.rol_id and u.nombre=?" />
-		</authentication-provider>
+		<authentication-provider ref="authenticationProvider" />
 	</authentication-manager>
 </beans:beans>
