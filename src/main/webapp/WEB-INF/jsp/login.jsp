@@ -16,6 +16,8 @@
 				<td><input name="submit" type="submit" value="submit" /></td>
 			</tr>
 		</table>
+		<label><input type="checkbox" id="rememberme"
+			name="remember-me" checked="true"> Remember Me</label>
 	</form>
 </body>
 </html>

@@ -17,6 +17,7 @@
 		<logout logout-success-url="/login" />
 		<csrf disabled="true" />
 
+		<remember-me services-ref="persistentTokenBasedRememberMeServices" />
 	</http>
 	<beans:bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
@@ -33,7 +34,16 @@
 		<!-- <beans:property name="authoritiesMapper" ref="authoritiesMapper" /> -->
 	</beans:bean>
 
+	<beans:bean id="tokenRepository" class="com.app.HibernateTokenRepositoryImpl" />
+
+	<beans:bean id="persistentTokenBasedRememberMeServices"
+		class="org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices">
+		<beans:constructor-arg value="remember-me" />
+		<beans:constructor-arg ref="customUserDetailsService" />
+		<beans:constructor-arg ref="tokenRepository" />
+	</beans:bean>
 	<authentication-manager>
 		<authentication-provider ref="authenticationProvider" />
 	</authentication-manager>
+
 </beans:beans>
