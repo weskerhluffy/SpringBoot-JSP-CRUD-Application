@@ -18,10 +18,18 @@
 		<csrf disabled="true" />
 
 	</http>
+	<beans:bean id="passwordEncoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+	<!-- XXX: https://stackoverflow.com/questions/26975452/bcrypt-how-to-determine-whether-two-hashes-refer-to-the-same-password -->
+	<!-- XXX: http://dustwell.com/how-to-handle-passwords-bcrypt.html -->
+	<!-- XXX: https://crypto.stackexchange.com/questions/33696/the-internals-of-bcrypt -->
+	<!-- XXX: https://yorickpeterse.com/articles/use-bcrypt-fool/ -->
+	<!-- XXX: https://labs.clio.com/bcrypt-cost-factor-4ca0a9b03966 -->
 	<beans:bean id="authenticationProvider"
 		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
 		<beans:property name="userDetailsService" ref="customUserDetailsService" />
+		<beans:property name="passwordEncoder" ref="passwordEncoder" />
 		<!-- <beans:property name="authoritiesMapper" ref="authoritiesMapper" /> -->
 	</beans:bean>
 

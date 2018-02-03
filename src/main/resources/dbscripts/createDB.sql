@@ -2,7 +2,7 @@ create table USUARIO
 (
 id IDENTITY PRIMARY KEY,
 nombre varchar(50),
-contra varchar(50),
+contra varchar(500),
 activo boolean
 );
 create table rol
