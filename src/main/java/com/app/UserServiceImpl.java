@@ -79,8 +79,9 @@ public class UserServiceImpl implements IUserService {
 		return user1.getAuthenticated();
 	}
 
-	@Transactional(isolation=Isolation.SERIALIZABLE)
+	@Transactional(isolation = Isolation.SERIALIZABLE)
 	public User findBySSO(String ssoId) {
+		assert userDao.findBySSO(ssoId).equals(userRepo.findBySSO(ssoId));
 		return userDao.findBySSO(ssoId);
 	}
 
