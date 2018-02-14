@@ -62,7 +62,7 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	private Date fecha;
 	@Transient
 	private Date fecha1;
-	@NotEmpty
+//	@NotEmpty
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "usuario_rol", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "rol_id") })

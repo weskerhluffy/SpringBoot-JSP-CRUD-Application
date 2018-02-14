@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -40,6 +41,8 @@ public class CacaController {
 	@Autowired
 	private CorreoValidador emailValidator;
 
+	private static final Logger logger = LoggerFactory.getLogger(CacaController.class);
+
 	@Autowired
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
@@ -54,12 +57,15 @@ public class CacaController {
 	public ModelAndView caca() {
 		ModelAndView model = new ModelAndView("caca");
 		model.addObject("list", userService.listAllUsers());
-		System.out.println("me lleva la mierda");
+		logger.info("me lleva la mierda");
 		return model;
 	}
 
 	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-	public ModelAndView deleteUsers(@PathVariable long id) {
+	public ModelAndView deleteUsers(@PathVariable long id) throws CacaException {
+		if (id == 0) {
+			throw new CacaException(id);
+		}
 		userService.deleteUser(id);
 		return new ModelAndView("redirect:/caca");
 	}
@@ -74,7 +80,8 @@ public class CacaController {
 	// https://www.concretepage.com/spring/spring-mvc/spring-mvc-validator-with-initbinder-webdatabinder-registercustomeditor-example
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ModelAndView userRegister(@ModelAttribute("usuario") @Valid User user, BindingResult result,
-			@DateTimeFormat(pattern = "yyyy") Date fecha2, @DateTimeFormat(pattern = "yyyy-MM") Date fecha3) {
+			@DateTimeFormat(pattern = "yyyy") Date fecha2, @DateTimeFormat(pattern = "yyyy-MM") Date fecha3)
+			throws CacaException, FuckException {
 		if (result.hasErrors()) {
 			for (ObjectError erro : result.getAllErrors()) {
 				System.out.println("error " + erro);
@@ -85,6 +92,13 @@ public class CacaController {
 		System.out.println("en usereg fecha " + fecha2);
 		System.out.println("en usereg fecha 3 " + fecha3);
 		if (user != null) {
+			logger.info("puta madre " + user.getTelefono());
+			if (user.getTelefono().equals("0")) {
+				throw new CacaException(user.getId());
+			}
+			if (user.getTelefono().equals("1")) {
+				throw new FuckException(user);
+			}
 			// TODO: Validar diccionario de datos
 			// userService.saveUser(user);
 			if (userService.enviarCodigo(user)) {
