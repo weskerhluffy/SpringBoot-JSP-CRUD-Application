@@ -27,15 +27,15 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  */
 
-@Entity(name="usuario") // Proje oluşturulurken Üyeler için JPA ile standart entity modeli
-		// oluşturulmuştur.
+@Entity(name = "usuario") // Proje oluşturulurken Üyeler için JPA ile standart entity modeli
+// oluşturulmuştur.
 public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db olduğu için sunucu
 					// durdurulduğunda veriler gidecektir.
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@Column(name="nombre")
+	@Column(name = "nombre")
 	private String name;
 	@Transient
 	private String surname;
@@ -49,8 +49,10 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	private String title;
 	@Transient
 	private String body;
-	@Column(name="activo")
+	@Column(name = "activo")
 	private Boolean authenticated;
+	// XXX: https://dzone.com/articles/bean-validation-made-simple
+	@NotNull
 	@Transient
 	private String correo;
 	// XXX:
@@ -62,12 +64,12 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	private Date fecha;
 	@Transient
 	private Date fecha1;
-//	@NotEmpty
+	// @NotEmpty
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "usuario_rol", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "rol_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
-	
+
 	private String contra;
 
 	public String getTelefono() {
@@ -198,7 +200,7 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 	public void setContra(String contra) {
 		this.contra = contra;
 	}
-	
+
 	public String getNombre() {
 		return name;
 	}

@@ -16,7 +16,8 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 // XXX: https://www.journaldev.com/2651/spring-mvc-exception-handling-controlleradvice-exceptionhandler-handlerexceptionresolver#handlerexceptionresolver
 //@Component("simpleMappingExceptionResolver")
-@Component(DispatcherServlet.HANDLER_EXCEPTION_RESOLVER_BEAN_NAME)
+@Component("cagada")
+//@Component(DispatcherServlet.HANDLER_EXCEPTION_RESOLVER_BEAN_NAME)
 public class CacaExceptionResolver extends SimpleMappingExceptionResolver {
 
 	private static final Logger logger = LoggerFactory.getLogger(CacaController.class);
@@ -32,10 +33,10 @@ public class CacaExceptionResolver extends SimpleMappingExceptionResolver {
 			private static final long serialVersionUID = 1642643382222560656L;
 
 			{
-				put("Exception", "generic_error.jsp");
+				put("FuckException", "generic_error");
 			}
 		});
-		setDefaultErrorView("generic_error.jsp");
+		setDefaultErrorView("default-error");
 	}
 
 	@Override

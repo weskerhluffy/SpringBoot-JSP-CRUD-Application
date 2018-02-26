@@ -8,8 +8,8 @@
     http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
 	<http use-expressions="true">
-		<intercept-url pattern="/*" access="isAnonymous()" />
-		<intercept-url pattern="/ass*" access="isAuthenticated()" />
+		<intercept-url pattern="/login" access="isAnonymous()" />
+		<intercept-url pattern="/*" access="isAuthenticated()" />
 
 		<form-login login-page='/login' default-target-url="/caca"
 			authentication-failure-url="/login?error=true" />

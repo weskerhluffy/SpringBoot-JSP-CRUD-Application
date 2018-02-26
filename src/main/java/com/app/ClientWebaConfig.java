@@ -1,6 +1,8 @@
 package com.app;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -63,8 +66,9 @@ public class ClientWebaConfig extends WebMvcConfigurerAdapter {
 		return a;
 	}
 
-	// XXX: http://www.logicbig.com/how-to/spring-mvc/spring-replacing-default-error-resolvers/
-	@Bean(DispatcherServlet.HANDLER_EXCEPTION_RESOLVER_BEAN_NAME)
+	// XXX:
+	// http://www.logicbig.com/how-to/spring-mvc/spring-replacing-default-error-resolvers/
+	// @Bean(DispatcherServlet.HANDLER_EXCEPTION_RESOLVER_BEAN_NAME)
 	HandlerExceptionResolver customExceptionResolver(ApplicationContext ac) {
 
 		logger.info("mierdaaa");
@@ -88,6 +92,28 @@ public class ClientWebaConfig extends WebMvcConfigurerAdapter {
 		bean.setPrefix("/WEB-INF/jsp/");
 		bean.setSuffix(".jsp");
 		return bean;
+	}
+
+	// XXX: https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
+	// XXX: https://www.javacodegeeks.com/2012/11/spring-mvc-error-handling-example.html
+	@Override
+	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+		CacaExceptionResolver caca = new CacaExceptionResolver();
+		List<HandlerExceptionResolver> mierda = new ArrayList<HandlerExceptionResolver>();
+		logger.info("pinche mierda");
+		for (HandlerExceptionResolver handlerExceptionResolver : exceptionResolvers) {
+			logger.info("assss " + handlerExceptionResolver);
+			if (handlerExceptionResolver.getClass() != DefaultHandlerExceptionResolver.class) {
+				mierda.add(handlerExceptionResolver);
+			} else {
+				mierda.add(caca);
+			}
+		}
+		// exceptionResolvers.clear();
+		// exceptionResolvers.addAll(Arrays.asList((HandlerExceptionResolver) caca));
+		// exceptionResolvers.addAll(mierda);
+		// exceptionResolvers.addAll(exceptionResolvers);
+		exceptionResolvers.add(caca);
 	}
 
 }

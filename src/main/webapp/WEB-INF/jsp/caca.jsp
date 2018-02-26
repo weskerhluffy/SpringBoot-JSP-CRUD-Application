@@ -57,7 +57,7 @@
 		<tr>
 			<td><b>correin </b></td>
 			<td><input type='text' name='correo' class='form-control'
-				size="20" required /></td>
+				size="20" /></td>
 		</tr>
 
 		<tr>
