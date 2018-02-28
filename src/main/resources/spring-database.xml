@@ -10,21 +10,23 @@
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd        
                 http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
 
+	<!-- XXX: https://stackoverflow.com/questions/6352371/using-properties-string-in-spring-xml-configuration-file -->
+	<context:property-placeholder location="classpath:datacaca.properties" />
+
+	<!-- value="jdbc:mysql://192.168.0.14:3306/caca?useLegacyDatetimeCode=false&serverTimezone=America/New_York" 
+		/> -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-
-		<property name="driverClassName" value="org.h2.Driver" />
-		<!-- XXX: https://stackoverflow.com/questions/5763747/h2-in-memory-database-table-not-found -->
-		<!-- XXX: https://stackoverflow.com/questions/37788029/spring-boot-populate-h2-database-with-schema-sql-and-data-sql -->
-		<property name="url"
-			value="jdbc:h2:mem:caca;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="caca" />
+		<property name="password" value="caca" />
 	</bean>
 
 	<!-- XXX: https://stackoverflow.com/questions/17107310/spring-config-xml-file-with-context-jdbc-tx-schemalocation -->
 	<!-- XXX: https://docs.spring.io/spring/docs/3.0.0.RC3/reference/html/ch12s09.html -->
-	<jdbc:initialize-database data-source="dataSource">
+	<jdbc:initialize-database data-source="dataSource"
+		ignore-failures="DROPS">
 		<jdbc:script location="classpath:dbscripts/createDB.sql" />
 		<jdbc:script location="classpath:dbscripts/caca.sql" />
 	</jdbc:initialize-database>
@@ -37,6 +39,25 @@
 		<!-- XXX: https://stackoverflow.com/questions/46255559/org-hibernate-unknownentitytypeexception-unable-to-locate-persister-entity-set/46314017 -->
 		<property name="packagesToScan" value="com.app" />
 	</bean>
+
+
+	<!-- XXX: http://www.baeldung.com/the-persistence-layer-with-spring-and-jpa -->
+	<bean id="myEmf"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.app" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+			</props>
+		</property>
+	</bean>
+	<alias name="myEmf" alias="entityManagerFactory" />
+
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />

@@ -1,14 +1,20 @@
-create table USUARIO
+drop table if exists usuario;
+drop table if exists rol;
+drop table if exists usuario_rol;
+drop table if exists PERSISTENT_LOGINS;
+create table usuario
 (
-id IDENTITY PRIMARY KEY,
+id int NOT NULL AUTO_INCREMENT,
 nombre varchar(50),
 contra varchar(500),
-activo boolean
+activo boolean,
+primary key(id)
 );
 create table rol
 (
-id IDENTITY PRIMARY KEY,
-nombre varchar(50)
+id int NOT NULL AUTO_INCREMENT,
+nombre varchar(50),
+primary key(id)
 );
 
 create table usuario_rol
@@ -19,8 +25,9 @@ create table usuario_rol
 
 create table PERSISTENT_LOGINS
 (
-series varchar(500) PRimary key,
+series varchar(500),
 username varchar(50),
 token varchar(500),
-last_used date
+last_used date,
+primary key(series)
 );
