@@ -34,7 +34,7 @@ public class Application extends SpringBootServletInitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		application.logStartupInfo(true);
-		return application.sources(ClientWebaConfig.class, ConfiguraWebaExpcetion.class);
+		return application.sources(ClientWebaConfig.class, ConfiguraWebaExpcetion.class, DataCacaConfig.class);
 	}
 
 	// XXX:
@@ -42,8 +42,8 @@ public class Application extends SpringBootServletInitializer {
 	@Bean(name = DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME)
 	public DispatcherServlet dispatcherServlet(WebApplicationContext wac) {
 		DispatcherServlet ds = new DispatcherServlet(wac);
-//		ds.setDetectAllHandlerAdapters(false);
-//		ds.setDetectAllHandlerMappings(false);
+		// ds.setDetectAllHandlerAdapters(false);
+		// ds.setDetectAllHandlerMappings(false);
 		ds.setDetectAllHandlerExceptionResolvers(false);
 		return ds;
 	}
@@ -60,7 +60,8 @@ public class Application extends SpringBootServletInitializer {
 	}
 
 	// XXX: https://dzone.com/articles/spring-1
-	// XXX: https://www.intertech.com/Blog/how-to-use-springs-webapplicationinitializer/
+	// XXX:
+	// https://www.intertech.com/Blog/how-to-use-springs-webapplicationinitializer/
 	// XXX: http://www.baeldung.com/spring-xml-vs-java-config
 	public static void main(String[] args) {
 		// SpringApplication.run(Application.class, args);

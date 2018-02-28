@@ -33,7 +33,7 @@ public class User { // Projede H2 DB kullanılmıştır. H2 db bir memory db old
 					// durdurulduğunda veriler gidecektir.
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(name = "nombre")
 	private String name;
