@@ -1,5 +1,7 @@
 <html>
-<head></head>
+<head>
+<title>fuckass</title>
+</head>
 <body>
 	<h1>Login</h1>
 	<form name='f' action="login" method='POST'>
