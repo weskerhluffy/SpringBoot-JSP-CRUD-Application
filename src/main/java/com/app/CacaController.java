@@ -57,6 +57,7 @@ public class CacaController {
 	public ModelAndView caca() {
 		ModelAndView model = new ModelAndView("caca");
 		model.addObject("list", userService.listAllUsers());
+		model.addObject("puta", "bitch");
 		logger.info("me lleva la mierda");
 		return model;
 	}

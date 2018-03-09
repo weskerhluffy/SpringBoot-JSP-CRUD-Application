@@ -17,6 +17,7 @@ class CagaTest extends Specification {
 	WebDriver driver
 
 	def setup() {
+		// XXX: http://www.codejava.net/frameworks/spring/bootstrapping-a-spring-web-mvc-application-programmatically
 		new SpringApplicationBuilder(Application.class).initializers().run();
 		Thread.sleep((Integer)1E4)
 		WebDriverManager.firefoxdriver().setup()
