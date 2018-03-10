@@ -9,12 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
@@ -46,7 +50,8 @@ public class GlobalControllerAdvice {
 		return mav;
 	}
 
-	// XXX: https://dzone.com/articles/global-exception-handling-with-controlleradvice
+	// XXX:
+	// https://dzone.com/articles/global-exception-handling-with-controlleradvice
 	@ExceptionHandler(CacaException.class)
 	public ModelAndView handleEmployeeNotFoundException(HttpServletRequest request, Exception ex) {
 		logger.error("Requested URL=" + request.getRequestURL());
@@ -58,5 +63,12 @@ public class GlobalControllerAdvice {
 
 		modelAndView.setViewName("error");
 		return modelAndView;
+	}
+
+	@ExceptionHandler({ PutaExcepcion.class })
+	public ResponseEntity<Object> putasHarry(Exception ex, WebRequest request) {
+		ApincheError apiError = new ApincheError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(),
+				"una pendejada ocurrio");
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 }
