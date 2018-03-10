@@ -2,6 +2,7 @@ package com.app;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -156,6 +158,15 @@ public class CacaController {
 	public void dataCaca(WebDataBinder binder) {
 		System.out.println("bindeando mail val");
 		binder.addValidators(emailValidator);
+	}
+
+	// XXX:
+	// https://stackoverflow.com/questions/26487089/sessionattributes-and-responsebody-do-not-work-together
+	@RequestMapping(value = "/mierda/{name}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody User getMierda(@ModelAttribute("usuario") User usuario, @PathVariable String name,
+			HttpSession sesion) {
+		usuario.setName(name);
+		return usuario;
 	}
 
 }
