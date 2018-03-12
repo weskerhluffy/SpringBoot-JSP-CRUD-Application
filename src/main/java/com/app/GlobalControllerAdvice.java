@@ -65,6 +65,7 @@ public class GlobalControllerAdvice {
 		return modelAndView;
 	}
 
+	// XXX: http://www.baeldung.com/global-error-handler-in-a-spring-rest-api
 	@ExceptionHandler({ PutaExcepcion.class })
 	public ResponseEntity<Object> putasHarry(Exception ex, WebRequest request) {
 		ApincheError apiError = new ApincheError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(),

@@ -7,9 +7,21 @@
     http://www.springframework.org/schema/beans 
     http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
+	<!-- XXX: https://www.mkyong.com/spring-security/spring-security-http-basic-authentication-example/ -->
+	<!-- XXX: https://stackoverflow.com/questions/24812902/a-universal-match-pattern-is-defined-before-other-patterns -->
+	<!-- XXX: https://dzone.com/articles/spring-security-basic-authentication-example-1 -->
+	<!-- XXX: https://stackoverflow.com/questions/33739359/combining-basic-authentication-and-form-login-for-the-same-rest-api -->
+	<!-- XXX: https://www.concretepage.com/spring-4/spring-4-rest-security-hibernate-5-crud-example-using-annotation-and-xml -->
+	<!-- XXX: https://www.boraji.com/spring-mvc-4-hibernate-5-restful-crud-operations-example -->
+	<http pattern="/puta/*" realm="bitch">
+		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<csrf disabled="true" />
+		<http-basic entry-point-ref="cacaBasicAuthenticationEntryPoint" />
+	</http>
+
 	<http use-expressions="true">
 		<intercept-url pattern="/login" access="isAnonymous()" />
-		<intercept-url pattern="/*" access="isAuthenticated()" />
+		<intercept-url pattern="/**" access="isAuthenticated()" />
 
 		<form-login login-page='/login' default-target-url="/caca"
 			authentication-failure-url="/login?error=true" />
@@ -19,6 +31,10 @@
 
 		<remember-me services-ref="persistentTokenBasedRememberMeServices" />
 	</http>
+
+
+	<beans:bean id="cacaBasicAuthenticationEntryPoint" class="com.app.CacaBasicAuthenticationEntryPoint" />
+
 	<beans:bean id="passwordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 

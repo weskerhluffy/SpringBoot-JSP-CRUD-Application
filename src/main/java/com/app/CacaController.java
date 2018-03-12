@@ -162,6 +162,8 @@ public class CacaController {
 
 	// XXX:
 	// https://stackoverflow.com/questions/26487089/sessionattributes-and-responsebody-do-not-work-together
+	// XXX:
+	// https://stackoverflow.com/questions/29381181/spring-sessionattributes-and-cannot-create-a-session-after-the-response-has-be/29401254
 	@RequestMapping(value = "/mierda/{name}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody User getMierda(@ModelAttribute("usuario") User usuario, @PathVariable String name,
 			HttpSession sesion) {

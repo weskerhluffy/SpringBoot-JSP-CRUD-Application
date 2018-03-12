@@ -1,5 +1,7 @@
 package com.app
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
+import static org.hamcrest.CoreMatchers.equalTo
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -74,6 +76,14 @@ class FuckTest extends Specification {
 		when:
 		ResultActions res=mockMvc.perform(get(url)).andExpect(status().isOk())
 				.andExpect(msg);
+		then:
+		res.andReturn()
+	}
+
+	// XXX: https://blog.trifork.com/2012/12/11/properly-testing-spring-mvc-controllers/
+	def "restacaca"(){
+		when:
+		ResultActions res=mockMvc.perform(get("/puta/gata")).andExpect(status().isAccepted()).andExpect(jsonPath("\$.nombre", equalTo("gata")))
 		then:
 		res.andReturn()
 	}

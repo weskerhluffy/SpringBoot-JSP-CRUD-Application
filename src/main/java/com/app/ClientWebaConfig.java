@@ -10,6 +10,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -95,7 +98,8 @@ public class ClientWebaConfig extends WebMvcConfigurerAdapter {
 	}
 
 	// XXX: https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc
-	// XXX: https://www.javacodegeeks.com/2012/11/spring-mvc-error-handling-example.html
+	// XXX:
+	// https://www.javacodegeeks.com/2012/11/spring-mvc-error-handling-example.html
 	@Override
 	public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
 		CacaExceptionResolver caca = new CacaExceptionResolver();
@@ -114,6 +118,13 @@ public class ClientWebaConfig extends WebMvcConfigurerAdapter {
 		// exceptionResolvers.addAll(mierda);
 		// exceptionResolvers.addAll(exceptionResolvers);
 		exceptionResolvers.add(caca);
+	}
+
+	@Override
+	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+		builder.indentOutput(true);
+		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
 	}
 
 }
